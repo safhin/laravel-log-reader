@@ -19,8 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/logs', [LogTestController::class, 'logViewer']);
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('/eventlog', [LogTestController::class, 'eventLogWrite']);
 
 Route::get('/custom-logger', [LogTestController::class, 'getLog']);
 Route::get('/log-viewer', [LogTestController::class, 'logViewer']);
+Route::get('/log-viewer/{folderName}/{filename}', [LogTestController::class, 'logViewerByFileName'])->name('log-viewr');
+Route::get('/log-files/{folderName}', [LogTestController::class, 'findLogFolder'])->name('log-folder');

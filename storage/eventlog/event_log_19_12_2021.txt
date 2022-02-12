@@ -1,0 +1,8 @@
+19-12-2021 16:14:01 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/change/status/15/0|change_status,cpv_customers|Status changed successfully.|15
+19-12-2021 16:22:25 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/change/status/15/1|change_status,cpv_customers|Status changed successfully.|15
+19-12-2021 17:12:17 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/change/status/14/0|change_status,cpv_customers|Status changed successfully.|14
+19-12-2021 17:12:47 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/change/status/14/1|change_status,cpv_customers|Status changed successfully.|14
+19-12-2021 17:50:52 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/delete/10|delete,cpv_customers|Content deleted successfully!.|10
+19-12-2021 18:23:59 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/delete/11|delete,cpv_customers|Content deleted successfully!.|11
+19-12-2021 20:41:32 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/change/status/12/0|change_status,cpv_customers|Status changed successfully.|12
+19-12-2021 20:42:02 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/customer/delete/12|delete,cpv_customers|Content deleted successfully!.|12

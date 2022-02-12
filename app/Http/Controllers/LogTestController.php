@@ -12,42 +12,51 @@ use function Ramsey\Uuid\v1;
 class LogTestController extends Controller
 {
 
-    public function getLogFileDates()
+    function array_keys_multi(array $array)
     {
-        $dates = [];
-        $files = glob(storage_path('errorlog/*.txt'));
+        $keys = array();
 
-        $files = array_reverse($files);
-        foreach ($files as $path) {
-            $fileName = basename($path);
+        foreach ($array as $key => $value) {
+            $keys[] = $key;
 
-
-
-            array_push($dates, $fileName);
+            if (is_array($array[$key])) {
+                $keys = array_merge($keys, $this->array_keys_multi($array[$key]));
+            }
         }
 
-        return $dates;
+        return $keys;
     }
 
-    public function getLog()
+    public function findLogFolder($folderName){
+        $logReader = new LogReader();
+        $logFiles = $logReader->getLogFiles($folderName);
+        return view('logfiles',[
+            'logFiles' => $logFiles,
+        ]);
+    }
+
+    public function logViewer()
     {
         $logReader = new LogReader();
-        $logs = $logReader->get();
-        return response()->json(['success' => true, 'data' => $logs]);
-    }
-
-    public function logViewer(){
+        $logFiles = $logReader->getLogFileDates();
         $logReader = new LogReader();
-        $logs = $logReader->get();
-        return view('log')->with('logs', $logs);
+        $logFiles = $logReader->getLogFiles('errorlog');
+        $logs = $logReader->get('errorlog',$logFiles[0]);
+
+
+        return view('log',[
+            'logs' => $logs,
+            'logFiles' => $logFiles,
+        ]);
+
     }
 
-
-
-    public function eventLogWrite()
-    {
-        $message = 'Error happend';
-        CustomLogWriteService::ErrorLogWrite($message);
-        return 'code came to the catch block';
+    public function logViewerByFileName($folderName, $fileName){
+        $logReader = new LogReader();
+        $logs = $logReader->get($folderName, $fileName);
+        return view('single',[
+            'logs' => $logs,
+        ]);
     }
+
 }

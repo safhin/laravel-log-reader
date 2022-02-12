@@ -1,0 +1,1 @@
+18-01-2022 17:14:59 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/save|insert,cpv_banks|{"bank_name":"National Bank Limited","bank_prefix_code":"NBL","bank_status":1,"bank_logo":"http:\/\/127.0.0.1:8000\/images\/cpv\/bank\/national-bank-limited-1642504498-5993260.png","updated_at":"2022-01-18 17:14:59","created_at":"2022-01-18 17:14:59","id":1}

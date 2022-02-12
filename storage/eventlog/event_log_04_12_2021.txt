@@ -1,0 +1,5 @@
+04-12-2021 22:04:50 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/change/status/12/0|update,cpv_banks|Content published successfully.|12
+04-12-2021 22:04:58 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/change/status/12/1|update,cpv_banks|Content published successfully.|12
+04-12-2021 22:05:41 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/change/status/12/0|update,cpv_banks|Content published successfully.|12
+04-12-2021 22:07:18 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/change/status/12/1|update,cpv_banks|Content published successfully.|12
+04-12-2021 22:08:59 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/update/12|insert,cpv_banks|{"id":12,"bank_name":"National Bank Limited","bank_prefix_code":"NLB","bank_logo":"http:\/\/127.0.0.1:8000\/images\/cpv\/bank\/national-bank-limited-1638634138-3515156.png","bank_status":"1","deleted_at":null,"created_at":"2021-12-03 10:36:51","updated_at":"2021-12-04 22:08:59"}

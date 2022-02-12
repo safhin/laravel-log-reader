@@ -1,2 +1,2 @@
-09-02-2022 09:47:47 - error_log --> 192.168.88.200|user|http://localhost/laralog/public/eventlog|Error happend
-09-02-2022 09:55:32 - error_log --> 192.168.88.200|user|http://localhost/laralog/public/eventlog|Error happend
+10-02-2022 09:47:47 - error_log --> 192.168.88.200|user|http://localhost/laralog/public/eventlog|Error happend
+10-02-2022 09:55:32 - error_log --> 192.168.88.200|user|http://localhost/laralog/public/eventlog|Error happend

@@ -5,76 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Log Reader</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/css/table.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/table.css') }}"> --}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src='https://code.jquery.com/jquery-1.12.3.js'></script>
+    <script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css">
+   
+    <script>
+        $(document).ready(function(){
+            $("#example").DataTable({
+                "pageLength": 5
+            });
+        });
+    </script>
 </head>
-<body ng-controller="LogCtrl">
-    <section class="content">
-        <div class="top_content">
-            <div class="top_content_left">
-                <div>
-                    <p class="selected_date" style="font-size: 14px;">
-                        <strong>
-                            <span ng-show="response.success">Showing Logs: {{$logs['date']}}</span>
-                        </strong>
-                    </p>
+<body>
+    <div class="container">
+        <div class="row py-4">
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <select class="form-control" id="folderSelect">
+                        <option value="">Select Log</option>
+                         <option value="errorlog" selected>Error Log</option>
+                         <option value="eventlog">Event Log</option>
+                         <option value="systemlog">System Log</option>
+                    </select>
                 </div>
+
+
+                <div class="form-group">
+                    <select class="form-control" id="logSelect">
+                        <option value="">Select Date</option>
+                        <option value="{{ $logs['filename'] }}" selected>{{ $logs['filename'] }}</option>
+                    </select>
+                </div>
+                
             </div>
-
-            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                <option value="event_log">Select Log Type:</option>
-                <option value="event_log">Event Log</option>
-                <option value="errorlog">Error Log</option>
-                <option value="systemlog">System Log</option>
-            </select>
-        </div>
-
-        <div>
-            <div class="pl-table">
-                <div class="pl-thead tall">
-                    <div class="row">
-                        <div class="col">Timestamp</div>
-                        <div class="col">Type</div>
-                        <div class="col">IP</div>
-                        <div class="col">Message</div>
-                    </div>
-                </div>
-                <div class="pl-tbody">
-                    @foreach ($logs['logs'] as $log)
-                        <div class="row">
-                            <div class="col">{{ $log['timestamp'] }}</div>
-                            <div class="col">
-                                @if ($log['type'] == "error_log")
-                                    <span class="badge badge-danger">{{ $log['type'] }}</span>
-                                @elseif($log['type'] == "access_log")
-                                    <span class="badge badge-info">Access Log</span>
-                                @endif
-                            </div>
-                            <div class="col">{{ $log['ip'] }}</div>
-                            <div class="col">{{ $log['message'] }}</div>
-                        </div>
-                    @endforeach
-                </div>
+            <div class="col-md-9">
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Type</th>
+                            <th>IP</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data">
+                        @foreach ($logs['logs'] as $log)
+                            <tr>
+                                <td>{{ $log['timestamp'] }}</td>
+                                <td><span class="badge badge-danger">{{ $log['type'] }}</span></td>
+                                <td>{{ $log['ip'] }}</td>
+                                <td>{{ $log['message'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 
+    <input type="hidden" class="site_url" value="{{url('/')}}">
 
-        <script>
-            $(document).ready(function() {
-                $.ajax({
-                    type: "GET",
-                    url: "custom-logger",
-                    dataType:'json',
-                    success: function(data) {
-                        log = data.data;
-                        console.log(log.date);
+    <script>
+        var site_url = $('.site_url').val();
+
+        $('#folderSelect').on('change', function() {
+
+            var folderName = $('#folderSelect').val();
+            if(folderName.length !=0){
+
+                var request_url = site_url+'/log-files/'+folderName;
+                jQuery.ajax({
+                    url: request_url,
+                    type: "get",
+                    success:function(data){
+                        // console.log(data);
+                        jQuery('#logSelect').html(data);
                     }
                 });
-            });
-        </script>
-    </section>
+
+            }else alert("Please Select Log Folder");
+        });
+
+
+        $('#logSelect').on('change', function() {
+            var folderName = $('#folderSelect').val();
+            var fileName = $('#logSelect').find(":selected").text();
+            if(fileName.length !=0){
+                var request_url = site_url+'/log-viewer/'+folderName+'/'+fileName;
+                jQuery.ajax({
+                    url: request_url,
+                    type: "get",
+                    success:function(data){
+                        jQuery('#data').html(data);
+                    }
+                });
+
+            }else alert("Please Select Date");
+        });
+
+        
+    </script>
+
+    
 </body>
 </html>

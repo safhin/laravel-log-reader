@@ -1,0 +1,2 @@
+12-12-2021 16:18:49 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/save|insert,cpv_banks|{"bank_name":"Brac Bank Limited","bank_prefix_code":"BBL","bank_status":1,"bank_logo":"","updated_at":"2021-12-12 16:18:49","created_at":"2021-12-12 16:18:49","id":34}
+12-12-2021 16:19:18 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/bank/save|insert,cpv_banks|{"bank_name":"Islami Bank Limited","bank_prefix_code":"IBL","bank_status":1,"bank_logo":"","updated_at":"2021-12-12 16:19:18","created_at":"2021-12-12 16:19:18","id":35}

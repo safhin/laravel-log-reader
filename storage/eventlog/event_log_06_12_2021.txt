@@ -1,0 +1,6 @@
+06-12-2021 19:36:03 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/question/delete/36|delete,cpv_questions|Content deleted successfully!.|36
+06-12-2021 19:36:16 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/question/delete/25|delete,cpv_questions|Content deleted successfully!.|25
+06-12-2021 19:55:02 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/question/change/status/33/0|change_status,cpv_questions|Status changed successfully.|33
+06-12-2021 19:55:58 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/question/delete/32|delete,cpv_questions|Content deleted successfully!.|32
+06-12-2021 19:56:07 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/question/change/status/31/0|change_status,cpv_questions|Status changed successfully.|31
+06-12-2021 22:22:17 - event_log --> UNKNOWN|3500|http://127.0.0.1:8000/cpv/question/change/status/28/0|change_status,cpv_questions|Status changed successfully.|28
