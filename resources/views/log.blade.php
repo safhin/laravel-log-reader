@@ -6,18 +6,15 @@
     <title>Log Reader</title>
 
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/table.css') }}"> --}}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src='https://code.jquery.com/jquery-1.12.3.js'></script>
-    <script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
-    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <script src="{{ asset('assets/js/jquery-3.5.1.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
    
     <script>
         $(document).ready(function(){
             $("#example").DataTable({
-                "pageLength": 5
+                "pageLength": 10
             });
         });
     </script>
@@ -30,9 +27,9 @@
                 <div class="form-group">
                     <select class="form-control" id="folderSelect">
                         <option value="">Select Log</option>
-                         <option value="errorlog" selected>Error Log</option>
-                         <option value="eventlog">Event Log</option>
-                         <option value="systemlog">System Log</option>
+                        @foreach ($folders as $folder)
+                            <option value="{{ $folder }}" @if (isset($_GET['dir']) && $_GET['dir']  == $folder) selected @endif>{{ Str::ucfirst($folder) }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -40,7 +37,9 @@
                 <div class="form-group">
                     <select class="form-control" id="logSelect">
                         <option value="">Select Date</option>
-                        <option value="{{ $logs['filename'] }}" selected>{{ $logs['filename'] }}</option>
+                        @foreach ($logFiles as $item)
+                            <option value="{{ $item }}" @if (isset($_GET['file']) == $item) selected @endif>{{ $item }}</option>
+                        @endforeach
                     </select>
                 </div>
                 
@@ -56,11 +55,15 @@
                         </tr>
                     </thead>
                     <tbody id="data">
-                        @foreach ($logs['logs'] as $log)
+                        @foreach ($logs as $log)
                             <tr>
                                 <td>{{ $log['timestamp'] }}</td>
                                 <td><span class="badge badge-danger">{{ $log['type'] }}</span></td>
-                                <td>{{ $log['ip'] }}</td>
+                                <td>
+                                    @isset($log['ip'])
+                                        {{ $log['ip'] }}
+                                    @endisset
+                                </td>
                                 <td>{{ $log['message'] }}</td>
                             </tr>
                         @endforeach
@@ -85,7 +88,6 @@
                     url: request_url,
                     type: "get",
                     success:function(data){
-                        // console.log(data);
                         jQuery('#logSelect').html(data);
                     }
                 });
@@ -95,17 +97,19 @@
 
 
         $('#logSelect').on('change', function() {
-            var folderName = $('#folderSelect').val();
+            var folderName = $('#folderSelect').find(":selected").val();
+            console.log(folderName);
             var fileName = $('#logSelect').find(":selected").text();
             if(fileName.length !=0){
-                var request_url = site_url+'/log-viewer/'+folderName+'/'+fileName;
-                jQuery.ajax({
-                    url: request_url,
-                    type: "get",
-                    success:function(data){
-                        jQuery('#data').html(data);
-                    }
-                });
+                // var request_url = site_url+'/log-viewer/'+folderName+'/'+fileName;
+                window.location = site_url+'/log-viewer?dir='+folderName+'&file='+fileName;
+                // jQuery.ajax({
+                //     url: request_url,
+                //     type: "get",
+                //     success:function(data){
+                //         jQuery('#data').html(data);
+                //     }
+                // });
 
             }else alert("Please Select Date");
         });
